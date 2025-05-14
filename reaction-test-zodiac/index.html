@@ -1,0 +1,301 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <meta http-equiv="Content-Style-Type" content="text/css">
+  <title></title>
+  <meta name="Generator" content="Cocoa HTML Writer">
+  <meta name="CocoaVersion" content="2299.7">
+  <style type="text/css">
+    p.p1 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px Helvetica}
+    p.p2 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px Helvetica; min-height: 14.0px}
+  </style>
+</head>
+<body>
+<p class="p1">&lt;!DOCTYPE html&gt;</p>
+<p class="p1">&lt;html lang="zh-Hant"&gt;</p>
+<p class="p1">&lt;head&gt;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;meta charset="UTF-8" /&gt;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;meta name="viewport" content="width=device-width, initial-scale=1.0" /&gt;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;title&gt;🌟 星際應援反應力測試 🌟&lt;/title&gt;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;script src="https://cdn.jsdelivr.net/npm/chart.js"&gt;&lt;/script&gt;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;style&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>body {</p>
+<p class="p1"><span class="Apple-converted-space">      </span>font-family: 'Microsoft JhengHei', sans-serif;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>text-align: center;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>background: linear-gradient(135deg, #ffe6f0, #e0f7fa);</p>
+<p class="p1"><span class="Apple-converted-space">      </span>padding: 20px;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>overflow-x: hidden;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>}</p>
+<p class="p1"><span class="Apple-converted-space">    </span>h1 {</p>
+<p class="p1"><span class="Apple-converted-space">      </span>color: #ff4081;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>font-size: 2em;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>animation: slideInDown 1s ease;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>}</p>
+<p class="p1"><span class="Apple-converted-space">    </span>#reaction-box, #test-stage {</p>
+<p class="p1"><span class="Apple-converted-space">      </span>background-color: rgba(255, 255, 255, 0.9);</p>
+<p class="p1"><span class="Apple-converted-space">      </span>padding: 50px;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>margin: 20px auto;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>width: 90%;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>max-width: 500px;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>border-radius: 15px;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);</p>
+<p class="p1"><span class="Apple-converted-space">      </span>transition: background-color 0.3s ease;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>position: relative;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>}</p>
+<p class="p1"><span class="Apple-converted-space">    </span>#test-stage { display: none; }</p>
+<p class="p1"><span class="Apple-converted-space">    </span>.dot-btn {</p>
+<p class="p1"><span class="Apple-converted-space">      </span>width: 80px;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>height: 80px;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>background: radial-gradient(circle, #ff80ab, #ff4081);</p>
+<p class="p1"><span class="Apple-converted-space">      </span>border-radius: 50%;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>border: none;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>cursor: pointer;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>font-size: 16px;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>color: white;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>margin-top: 20px;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>transition: transform 0.2s ease, background 0.3s ease;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>box-shadow: 0 4px 12px rgba(255, 64, 129, 0.5);</p>
+<p class="p1"><span class="Apple-converted-space">    </span>}</p>
+<p class="p1"><span class="Apple-converted-space">    </span>.dot-btn:hover {</p>
+<p class="p1"><span class="Apple-converted-space">      </span>transform: scale(1.1);</p>
+<p class="p1"><span class="Apple-converted-space">    </span>}</p>
+<p class="p1"><span class="Apple-converted-space">    </span>.dot-btn.bounce {</p>
+<p class="p1"><span class="Apple-converted-space">      </span>animation: bounce 0.6s;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>}</p>
+<p class="p1"><span class="Apple-converted-space">    </span>@keyframes bounce {</p>
+<p class="p1"><span class="Apple-converted-space">      </span>0% { transform: scale(1); }</p>
+<p class="p1"><span class="Apple-converted-space">      </span>50% { transform: scale(1.3); }</p>
+<p class="p1"><span class="Apple-converted-space">      </span>100% { transform: scale(1); }</p>
+<p class="p1"><span class="Apple-converted-space">    </span>}</p>
+<p class="p1"><span class="Apple-converted-space">    </span>#leaderboard {</p>
+<p class="p1"><span class="Apple-converted-space">      </span>margin-top: 30px;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>text-align: left;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>width: 90%;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>max-width: 600px;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>margin-left: auto;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>margin-right: auto;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>background-color: #fff;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>padding: 20px;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>border-radius: 15px;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>box-shadow: 0 4px 15px rgba(0,0,0,0.1);</p>
+<p class="p1"><span class="Apple-converted-space">    </span>}</p>
+<p class="p1"><span class="Apple-converted-space">    </span>#chart-container {</p>
+<p class="p1"><span class="Apple-converted-space">      </span>margin-top: 30px;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>background: #fff;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>border-radius: 15px;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>padding: 20px;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>box-shadow: 0 4px 15px rgba(0,0,0,0.1);</p>
+<p class="p1"><span class="Apple-converted-space">      </span>width: 90%;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>max-width: 600px;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>margin-left: auto;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>margin-right: auto;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>}</p>
+<p class="p1"><span class="Apple-converted-space">    </span>input, select {</p>
+<p class="p1"><span class="Apple-converted-space">      </span>padding: 10px;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>font-size: 16px;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>border-radius: 8px;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>border: 1px solid #ccc;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>margin: 5px;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>}</p>
+<p class="p1"><span class="Apple-converted-space">    </span>@keyframes slideInDown {</p>
+<p class="p1"><span class="Apple-converted-space">      </span>from {</p>
+<p class="p1"><span class="Apple-converted-space">        </span>transform: translateY(-30px);</p>
+<p class="p1"><span class="Apple-converted-space">        </span>opacity: 0;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>}</p>
+<p class="p1"><span class="Apple-converted-space">      </span>to {</p>
+<p class="p1"><span class="Apple-converted-space">        </span>transform: translateY(0);</p>
+<p class="p1"><span class="Apple-converted-space">        </span>opacity: 1;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>}</p>
+<p class="p1"><span class="Apple-converted-space">    </span>}</p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;/style&gt;</p>
+<p class="p1">&lt;/head&gt;</p>
+<p class="p1">&lt;body&gt;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;h1&gt;🌟 星座反應力測試 🌟&lt;/h1&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;div id="reaction-box"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;p id="instructions"&gt;請輸入名稱與選擇星座後點選開始，每次測試會進行 5 題計算平均速度&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;input type="text" id="name" placeholder="你的名字" /&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;select id="zodiac"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;option value=""&gt;選擇星座&lt;/option&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;option&gt;牡羊座&lt;/option&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;option&gt;金牛座&lt;/option&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;option&gt;雙子座&lt;/option&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;option&gt;巨蟹座&lt;/option&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;option&gt;獅子座&lt;/option&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;option&gt;處女座&lt;/option&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;option&gt;天秤座&lt;/option&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;option&gt;天蠍座&lt;/option&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;option&gt;射手座&lt;/option&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;option&gt;魔羯座&lt;/option&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;option&gt;水瓶座&lt;/option&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;option&gt;雙魚座&lt;/option&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;/select&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;button id="begin-btn" class="dot-btn"&gt;開始&lt;/button&gt;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;/div&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;div id="test-stage"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;p id="status"&gt;&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;button id="start-btn" class="dot-btn"&gt;點我&lt;/button&gt;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;/div&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;div id="chart-container"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;h2&gt;📊 每題反應速度圖表&lt;/h2&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;canvas id="reactionChart"&gt;&lt;/canvas&gt;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;/div&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;div id="leaderboard"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;h2&gt;🎉 排行榜（平均反應速度）&lt;/h2&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;ol id="ranking"&gt;&lt;/ol&gt;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;/div&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;script&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>const beginBtn = document.getElementById("begin-btn");</p>
+<p class="p1"><span class="Apple-converted-space">    </span>const startBtn = document.getElementById("start-btn");</p>
+<p class="p1"><span class="Apple-converted-space">    </span>const statusText = document.getElementById("status");</p>
+<p class="p1"><span class="Apple-converted-space">    </span>const reactionBox = document.getElementById("reaction-box");</p>
+<p class="p1"><span class="Apple-converted-space">    </span>const testStage = document.getElementById("test-stage");</p>
+<p class="p1"><span class="Apple-converted-space">    </span>const rankingList = document.getElementById("ranking");</p>
+<p class="p1"><span class="Apple-converted-space">    </span>const ctx = document.getElementById('reactionChart').getContext('2d');</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">    </span>let currentTest = 0;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>let totalTime = 0;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>let startTime;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>let ready = false;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>let userName = "";</p>
+<p class="p1"><span class="Apple-converted-space">    </span>let userZodiac = "";</p>
+<p class="p1"><span class="Apple-converted-space">    </span>let reactionTimes = [];</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">    </span>const chart = new Chart(ctx, {</p>
+<p class="p1"><span class="Apple-converted-space">      </span>type: 'line',</p>
+<p class="p1"><span class="Apple-converted-space">      </span>data: {</p>
+<p class="p1"><span class="Apple-converted-space">        </span>labels: ['1', '2', '3', '4', '5'],</p>
+<p class="p1"><span class="Apple-converted-space">        </span>datasets: [{</p>
+<p class="p1"><span class="Apple-converted-space">          </span>label: '反應時間 (毫秒)',</p>
+<p class="p1"><span class="Apple-converted-space">          </span>data: [0, 0, 0, 0, 0],</p>
+<p class="p1"><span class="Apple-converted-space">          </span>backgroundColor: 'rgba(255, 128, 171, 0.2)',</p>
+<p class="p1"><span class="Apple-converted-space">          </span>borderColor: '#ff80ab',</p>
+<p class="p1"><span class="Apple-converted-space">          </span>borderWidth: 2,</p>
+<p class="p1"><span class="Apple-converted-space">          </span>fill: true,</p>
+<p class="p1"><span class="Apple-converted-space">          </span>tension: 0.3,</p>
+<p class="p1"><span class="Apple-converted-space">          </span>pointRadius: 5,</p>
+<p class="p1"><span class="Apple-converted-space">          </span>pointBackgroundColor: '#ff4081'</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}]</p>
+<p class="p1"><span class="Apple-converted-space">      </span>},</p>
+<p class="p1"><span class="Apple-converted-space">      </span>options: {</p>
+<p class="p1"><span class="Apple-converted-space">        </span>scales: {</p>
+<p class="p1"><span class="Apple-converted-space">          </span>y: {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>beginAtZero: true,</p>
+<p class="p1"><span class="Apple-converted-space">            </span>title: {</p>
+<p class="p1"><span class="Apple-converted-space">              </span>display: true,</p>
+<p class="p1"><span class="Apple-converted-space">              </span>text: '毫秒'</p>
+<p class="p1"><span class="Apple-converted-space">            </span>}</p>
+<p class="p1"><span class="Apple-converted-space">          </span>},</p>
+<p class="p1"><span class="Apple-converted-space">          </span>x: {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>title: {</p>
+<p class="p1"><span class="Apple-converted-space">              </span>display: true,</p>
+<p class="p1"><span class="Apple-converted-space">              </span>text: '題次'</p>
+<p class="p1"><span class="Apple-converted-space">            </span>}</p>
+<p class="p1"><span class="Apple-converted-space">          </span>}</p>
+<p class="p1"><span class="Apple-converted-space">        </span>},</p>
+<p class="p1"><span class="Apple-converted-space">        </span>animation: {</p>
+<p class="p1"><span class="Apple-converted-space">          </span>duration: 800,</p>
+<p class="p1"><span class="Apple-converted-space">          </span>easing: 'easeOutQuart'</p>
+<p class="p1"><span class="Apple-converted-space">        </span>},</p>
+<p class="p1"><span class="Apple-converted-space">        </span>plugins: {</p>
+<p class="p1"><span class="Apple-converted-space">          </span>legend: {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>display: false</p>
+<p class="p1"><span class="Apple-converted-space">          </span>}</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p1"><span class="Apple-converted-space">      </span>}</p>
+<p class="p1"><span class="Apple-converted-space">    </span>});</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">    </span>function updateLeaderboard(newEntry = null) {</p>
+<p class="p1"><span class="Apple-converted-space">      </span>let leaderboard = JSON.parse(localStorage.getItem("reactionLeaderboard") || "[]");</p>
+<p class="p1"><span class="Apple-converted-space">      </span>if (newEntry &amp;&amp; newEntry.name) {</p>
+<p class="p1"><span class="Apple-converted-space">        </span>leaderboard.push(newEntry);</p>
+<p class="p1"><span class="Apple-converted-space">        </span>leaderboard.sort((a, b) =&gt; a.avgTime - b.avgTime);</p>
+<p class="p1"><span class="Apple-converted-space">        </span>leaderboard = leaderboard.slice(0, 10);</p>
+<p class="p1"><span class="Apple-converted-space">        </span>localStorage.setItem("reactionLeaderboard", JSON.stringify(leaderboard));</p>
+<p class="p1"><span class="Apple-converted-space">      </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">      </span>rankingList.innerHTML = "";</p>
+<p class="p1"><span class="Apple-converted-space">      </span>leaderboard.forEach(entry =&gt; {</p>
+<p class="p1"><span class="Apple-converted-space">        </span>const li = document.createElement("li");</p>
+<p class="p1"><span class="Apple-converted-space">        </span>li.textContent = `${entry.name}（${entry.zodiac}） - 平均 ${entry.avgTime.toFixed(1)} 毫秒`;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>rankingList.appendChild(li);</p>
+<p class="p1"><span class="Apple-converted-space">      </span>});</p>
+<p class="p1"><span class="Apple-converted-space">    </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">    </span>function animateDot() {</p>
+<p class="p1"><span class="Apple-converted-space">      </span>startBtn.classList.add("bounce");</p>
+<p class="p1"><span class="Apple-converted-space">      </span>setTimeout(() =&gt; startBtn.classList.remove("bounce"), 600);</p>
+<p class="p1"><span class="Apple-converted-space">    </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">    </span>function runTest() {</p>
+<p class="p1"><span class="Apple-converted-space">      </span>if (currentTest &gt;= 5) {</p>
+<p class="p1"><span class="Apple-converted-space">        </span>const avgTime = totalTime / 5;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>statusText.textContent = `🎯 測試完成！平均反應時間：${avgTime.toFixed(1)} 毫秒`;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>updateLeaderboard({ name: userName, zodiac: userZodiac, avgTime });</p>
+<p class="p1"><span class="Apple-converted-space">        </span>startBtn.textContent = "再試一次";</p>
+<p class="p1"><span class="Apple-converted-space">        </span>currentTest = 0;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>totalTime = 0;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>chart.data.datasets[0].data = [0, 0, 0, 0, 0];</p>
+<p class="p1"><span class="Apple-converted-space">        </span>chart.update();</p>
+<p class="p1"><span class="Apple-converted-space">        </span>return;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">      </span>statusText.textContent = "⏳ 準備中...";</p>
+<p class="p1"><span class="Apple-converted-space">      </span>testStage.style.backgroundColor = "#f0f0f0";</p>
+<p class="p1"><span class="Apple-converted-space">      </span>startBtn.disabled = true;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">      </span>const delay = Math.floor(Math.random() * 3000) + 2000;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>setTimeout(() =&gt; {</p>
+<p class="p1"><span class="Apple-converted-space">        </span>testStage.style.backgroundColor = "#c8f7c5";</p>
+<p class="p1"><span class="Apple-converted-space">        </span>statusText.textContent = `🚀 第 ${currentTest + 1} 題：點擊圓點！`;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>startBtn.disabled = false;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>ready = true;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>animateDot();</p>
+<p class="p1"><span class="Apple-converted-space">        </span>startTime = Date.now();</p>
+<p class="p1"><span class="Apple-converted-space">      </span>}, delay);</p>
+<p class="p1"><span class="Apple-converted-space">    </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">    </span>beginBtn.addEventListener("click", () =&gt; {</p>
+<p class="p1"><span class="Apple-converted-space">      </span>userName = document.getElementById("name").value.trim();</p>
+<p class="p1"><span class="Apple-converted-space">      </span>userZodiac = document.getElementById("zodiac").value;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>if (!userName) {</p>
+<p class="p1"><span class="Apple-converted-space">        </span>alert("請輸入名字！");</p>
+<p class="p1"><span class="Apple-converted-space">        </span>return;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>}</p>
+<p class="p1"><span class="Apple-converted-space">      </span>if (!userZodiac) {</p>
+<p class="p1"><span class="Apple-converted-space">        </span>alert("請選擇星座！");</p>
+<p class="p1"><span class="Apple-converted-space">        </span>return;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>}</p>
+<p class="p1"><span class="Apple-converted-space">      </span>reactionBox.style.display = "none";</p>
+<p class="p1"><span class="Apple-converted-space">      </span>testStage.style.display = "block";</p>
+<p class="p1"><span class="Apple-converted-space">      </span>reactionTimes = [];</p>
+<p class="p1"><span class="Apple-converted-space">      </span>currentTest = 0;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>totalTime = 0;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>runTest();</p>
+<p class="p1"><span class="Apple-converted-space">    </span>});</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">    </span>startBtn.addEventListener("click", () =&gt; {</p>
+<p class="p1"><span class="Apple-converted-space">      </span>if (!ready) return;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>const reactionTime = Date.now() - startTime;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>totalTime += reactionTime;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>reactionTimes[currentTest] = reactionTime;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>chart.data.datasets[0].data[currentTest] = reactionTime;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>chart.update();</p>
+<p class="p1"><span class="Apple-converted-space">      </span>currentTest++;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>ready = false;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>runTest();</p>
+<p class="p1"><span class="Apple-converted-space">    </span>});</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">    </span>window.onload = () =&gt; {</p>
+<p class="p1"><span class="Apple-converted-space">      </span>updateLeaderboard();</p>
+<p class="p1"><span class="Apple-converted-space">    </span>};</p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;/script&gt;</p>
+<p class="p1">&lt;/body&gt;</p>
+<p class="p1">&lt;/html&gt;</p>
+</body>
+</html>
