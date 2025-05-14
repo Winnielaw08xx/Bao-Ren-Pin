@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>🌟 星際應援反應力測試 🌟</title>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <style>
+    body {
+      font-family: 'Microsoft JhengHei', sans-serif;
+      text-align: center;
+      background: linear-gradient(135deg, #ffe6f0, #e0f7fa);
+      padding: 20px;
+      overflow-x: hidden;
+    }
+    h1 {
+      color: #ff4081;
+      font-size: 2em;
+      animation: slideInDown 1s ease;
+    }
+    #reaction-box, #test-stage {
+      background-color: rgba(255, 255, 255, 0.9);
+      padding: 50px;
+      margin: 20px auto;
+      width: 90%;
+      max-width: 500px;
+      border-radius: 15px;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+      transition: background-color 0.3s ease;
+      position: relative;
+    }
+    #test-stage { display: none; }
+    .dot-btn {
+      width: 80px;
+      height: 80px;
+      background: radial-gradient(circle, #ff80ab, #ff4081);
+      border-radius: 50%;
+      border: none;
+      cursor: pointer;
+      font-size: 16px;
+      color: white;
+      margin-top: 20px;
+      transition: transform 0.2s ease, background 0.3s ease;
+      box-shadow: 0 4px 12px rgba(255, 64, 129, 0.5);
+    }
+    .dot-btn:hover {
+      transform: scale(1.1);
+    }
+    .dot-btn.bounce {
+      animation: bounce 0.6s;
+    }
+    @keyframes bounce {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.3); }
+      100% { transform: scale(1); }
+    }
+    #leaderboard {
+      margin-top: 30px;
+      text-align: left;
+      width: 90%;
+      max-width: 600px;
+      margin-left: auto;
+      margin-right: auto;
+      background-color: #fff;
+      padding: 20px;
+      border-radius: 15px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    }
+    #chart-container {
+      margin-top: 30px;
+      background: #fff;
+      border-radius: 15px;
+      padding: 20px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+      width: 90%;
+      max-width: 600px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    input, select {
+      padding: 10px;
+      font-size: 16px;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+      margin: 5px;
+    }
+    @keyframes slideInDown {
+      from {
+        transform: translateY(-30px);
+        opacity: 0;
+      }
+      to {
+        transform: translateY(0);
+        opacity: 1;
+      }
+    }
+  </style>
+</head>
+<body>
+  <h1>🌟 星座反應力測試 🌟</h1>
+
+  <div id="reaction-box">
+    <p id="instructions">請輸入名稱與選擇星座後點選開始，每次測試會進行 5 題計算平均速度</p>
+    <input type="text" id="name" placeholder="你的名字" />
+    <select id="zodiac">
+      <option value="">選擇星座</option>
+      <option>牡羊座</option>
+      <option>金牛座</option>
+      <option>雙子座</option>
+      <option>巨蟹座</option>
+      <option>獅子座</option>
+      <option>處女座</option>
+      <option>天秤座</option>
+      <option>天蠍座</option>
+      <option>射手座</option>
+      <option>魔羯座</option>
+      <option>水瓶座</option>
+      <option>雙魚座</option>
+    </select>
+    <button id="begin-btn" class="dot-btn">開始</button>
+  </div>
+
+  <div id="test-stage">
+    <p id="status"></p>
+    <button id="start-btn" class="dot-btn">點我</button>
+  </div>
+
+  <div id="chart-container">
+    <h2>📊 每題反應速度圖表</h2>
+    <canvas id="reactionChart"></canvas>
+  </div>
+
+  <div id="leaderboard">
+    <h2>🎉 排行榜（平均反應速度）</h2>
+    <ol id="ranking"></ol>
+  </div>
+
+  <script>
+    const beginBtn = document.getElementById("begin-btn");
+    const startBtn = document.getElementById("start-btn");
+    const statusText = document.getElementById("status");
+    const reactionBox = document.getElementById("reaction-box");
+    const testStage = document.getElementById("test-stage");
+    const rankingList = document.getElementById("ranking");
+    const ctx = document.getElementById('reactionChart').getContext('2d');
+
+    let currentTest = 0;
+    let totalTime = 0;
+    let startTime;
+    let ready = false;
+    let userName = "";
+    let userZodiac = "";
+    let reactionTimes = [];
+
+    const chart = new Chart(ctx, {
+      type: 'line',
+      data: {
+        labels: ['1', '2', '3', '4', '5'],
+        datasets: [{
+          label: '反應時間 (毫秒)',
+          data: [0, 0, 0, 0, 0],
+          backgroundColor: 'rgba(255, 128, 171, 0.2)',
+          borderColor: '#ff80ab',
+          borderWidth: 2,
+          fill: true,
+          tension: 0.3,
+          pointRadius: 5,
+          pointBackgroundColor: '#ff4081'
+        }]
+      },
+      options: {
+        scales: {
+          y: {
+            beginAtZero: true,
+            title: {
+              display: true,
+              text: '毫秒'
+            }
+          },
+          x: {
+            title: {
+              display: true,
+              text: '題次'
+            }
+          }
+        },
+        animation: {
+          duration: 800,
+          easing: 'easeOutQuart'
+        },
+        plugins: {
+          legend: {
+            display: false
+          }
+        }
+      }
+    });
+
+    function updateLeaderboard(newEntry = null) {
+      let leaderboard = JSON.parse(localStorage.getItem("reactionLeaderboard") || "[]");
+      if (newEntry && newEntry.name) {
+        leaderboard.push(newEntry);
+        leaderboard.sort((a, b) => a.avgTime - b.avgTime);
+        leaderboard = leaderboard.slice(0, 10);
+        localStorage.setItem("reactionLeaderboard", JSON.stringify(leaderboard));
+      }
+
+      rankingList.innerHTML = "";
+      leaderboard.forEach(entry => {
+        const li = document.createElement("li");
+        li.textContent = `${entry.name}（${entry.zodiac}） - 平均 ${entry.avgTime.toFixed(1)} 毫秒`;
+        rankingList.appendChild(li);
+      });
+    }
+
+    function animateDot() {
+      startBtn.classList.add("bounce");
+      setTimeout(() => startBtn.classList.remove("bounce"), 600);
+    }
+
+    function runTest() {
+      if (currentTest >= 5) {
+        const avgTime = totalTime / 5;
+        statusText.textContent = `🎯 測試完成！平均反應時間：${avgTime.toFixed(1)} 毫秒`;
+        updateLeaderboard({ name: userName, zodiac: userZodiac, avgTime });
+        startBtn.textContent = "再試一次";
+        currentTest = 0;
+        totalTime = 0;
+        chart.data.datasets[0].data = [0, 0, 0, 0, 0];
+        chart.update();
+        return;
+      }
+
+      statusText.textContent = "⏳ 準備中...";
+      testStage.style.backgroundColor = "#f0f0f0";
+      startBtn.disabled = true;
+
+      const delay = Math.floor(Math.random() * 3000) + 2000;
+      setTimeout(() => {
+        testStage.style.backgroundColor = "#c8f7c5";
+        statusText.textContent = `🚀 第 ${currentTest + 1} 題：點擊圓點！`;
+        startBtn.disabled = false;
+        ready = true;
+        animateDot();
+        startTime = Date.now();
+      }, delay);
+    }
+
+    beginBtn.addEventListener("click", () => {
+      userName = document.getElementById("name").value.trim();
+      userZodiac = document.getElementById("zodiac").value;
+      if (!userName) {
+        alert("請輸入名字！");
+        return;
+      }
+      if (!userZodiac) {
+        alert("請選擇星座！");
+        return;
+      }
+      reactionBox.style.display = "none";
+      testStage.style.display = "block";
+      reactionTimes = [];
+      currentTest = 0;
+      totalTime = 0;
+      runTest();
+    });
+
+    startBtn.addEventListener("click", () => {
+      if (!ready) return;
+      const reactionTime = Date.now() - startTime;
+      totalTime += reactionTime;
+      reactionTimes[currentTest] = reactionTime;
+      chart.data.datasets[0].data[currentTest] = reactionTime;
+      chart.update();
+      currentTest++;
+      ready = false;
+      runTest();
+    });
+
+    window.onload = () => {
+      updateLeaderboard();
+    };
+  </script>
+</body>
+</html>
